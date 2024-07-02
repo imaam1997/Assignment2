@@ -39,7 +39,7 @@
             border: 1px solid #ccc;
             padding: 5px;
             box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px; /* Added border radius for image */
+            border-radius: 8px;
         }
     </style>
 </head>
@@ -62,8 +62,8 @@
                         // Loop through object keys (filenames) and values (base64 content)
                         Object.keys(images).forEach(filename => {
                             const img = document.createElement('img');
-                            img.src = `data:image/jpeg;base64,${images[filename].toString('base64')}`; // Adjust based on your image type
-                            img.alt = filename; // Optional: Use filename as alt text
+                            img.src = `data:image/jpeg;base64,${images[filename]}`; // Set image source as base64 string
+                            img.alt = filename; 
                             gallery.appendChild(img);
                         });
                     })

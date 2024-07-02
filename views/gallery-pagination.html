@@ -82,37 +82,41 @@
         </div>
 
         <script>
-            const ITEMS_PER_PAGE = 3;
-            let currentPage = 1;
-            let totalPages = 1;
+            const ITEMS_PER_PAGE = 3; // Number of images to display per page
+            let currentPage = 1; // Current page index
+            let totalPages = 1; // Total number of pages
 
+            // Function to fetch images for the current page
             function fetchImages(page) {
                 fetch(`/fetch-all/pages/${page}?items_per_page=${ITEMS_PER_PAGE}`)
                     .then(response => response.json())
                     .then(data => {
-                        totalPages = data.totalPages;
+                        totalPages = data.totalPages; // Update total pages
                         document.getElementById('page-info').innerText = `Page ${data.page} of ${totalPages}`;
                         const gallery = document.getElementById('gallery');
-                        gallery.innerHTML = '';
+                        gallery.innerHTML = ''; // Clear previous images
                         Object.keys(data.files).forEach(file => {
                             const img = document.createElement('img');
-                            img.src = `/uploads/${file}`;
-                            gallery.appendChild(img);
+                            img.src = `/uploads/${file}`; // Set image source
+                            gallery.appendChild(img); // Add image to gallery
                         });
+                        // Enable/disable pagination buttons based on current page
                         document.getElementById('prev').disabled = page <= 1;
                         document.getElementById('next').disabled = page >= totalPages;
                     })
                     .catch(error => console.error('Error fetching images:', error));
             }
 
+            // Function to change page
             function changePage(offset) {
                 const newPage = currentPage + offset;
                 if (newPage > 0 && newPage <= totalPages) {
-                    currentPage = newPage;
-                    fetchImages(currentPage);
+                    currentPage = newPage; // Update current page
+                    fetchImages(currentPage); // Fetch images for the new page
                 }
             }
 
+            // Fetch images when the page is loaded
             document.addEventListener('DOMContentLoaded', () => {
                 fetchImages(currentPage);
             });

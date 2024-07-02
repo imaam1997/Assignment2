@@ -129,8 +129,6 @@ const getAllFiles = () => {
   return fileContents;
 };
 
-
-
 // Route to serve gallery.html
 app.get("/gallery", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "gallery.html"));

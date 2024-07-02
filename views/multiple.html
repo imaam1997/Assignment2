@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,26 +16,26 @@
             height: 100vh;
         }
         .card {
-            max-width: 800px;
+            max-width: 100%;
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            overflow-x: auto; 
         }
         h1 {
             color: #333;
         }
         .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            display: flex; 
             gap: 10px;
-            justify-items: center;
             padding: 10px;
         }
         .gallery img {
-            width: 100%;
-            height: auto;
+            width: 200px; 
+            height: 150px; 
+            object-fit: cover; 
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s ease-in-out;
@@ -67,12 +67,15 @@
         <script>
             const NUM_IMAGES = 3; // Number of images to fetch
 
+              // Event listener for the fetch button
             document.getElementById("fetch-images").addEventListener("click", () => {
+                // Fetch images from the server
                 fetch(`/fetch-multiple?num_images=${NUM_IMAGES}`)
                     .then(response => response.json())
                     .then(data => {
                         const gallery = document.getElementById("gallery");
-                        gallery.innerHTML = ""; // Clear previous images
+                        gallery.innerHTML = ""; 
+                        // Loop through each image URL and add to the gallery
                         data.images.forEach(imageURL => {
                             const img = document.createElement("img");
                             img.src = imageURL;
