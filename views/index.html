@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload and Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card {
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center; /* Center align the content inside .card */
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a.button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            width: 100%; /* Set width to 100% for full-width buttons */
+            max-width: 300px; /* Limit maximum width of buttons */
+            box-sizing: border-box; /* Ensure padding is included in width */
+        }
+        a.button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Welcome to File Upload and Management</h1>
+        <ul>
+            <li><a href="/upload" class="button">Upload a Single File</a></li>
+            <li><a href="/upload-multiple" class="button">Upload Multiple Files</a></li>
+            <li><a href="/single" class="button">Fetch a Random File</a></li>
+            <li><a href="/multiple" class="button">Fetch Multiple Random Files</a></li>
+            <li><a href="/gallery" class="button">View Gallery of All Files</a></li>
+            <li><a href="/gallery-pagination" class="button">View Gallery with Pagination</a></li>
+        </ul>
+    </div>
+</body>
+</html>

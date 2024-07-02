@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Pagination</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card {
+            max-width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            padding: 10px;
+        }
+        .gallery img {
+            width: 200px;
+            height: auto;
+            border: 1px solid #ccc;
+            padding: 5px;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .pagination {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .pagination button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .pagination button[disabled] {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .pagination button:not([disabled]):hover {
+            background-color: #0056b3;
+        }
+        #page-info {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Image Gallery with Pagination</h1>
+        <div class="gallery" id="gallery"></div>
+        <div class="pagination">
+            <button id="prev" onclick="changePage(-1)">Previous</button>
+            <span id="page-info"></span>
+            <button id="next" onclick="changePage(1)">Next</button>
+        </div>
+
+        <script>
+            const ITEMS_PER_PAGE = 3;
+            let currentPage = 1;
+            let totalPages = 1;
+
+            function fetchImages(page) {
+                fetch(`/fetch-all/pages/${page}?items_per_page=${ITEMS_PER_PAGE}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        totalPages = data.totalPages;
+                        document.getElementById('page-info').innerText = `Page ${data.page} of ${totalPages}`;
+                        const gallery = document.getElementById('gallery');
+                        gallery.innerHTML = '';
+                        Object.keys(data.files).forEach(file => {
+                            const img = document.createElement('img');
+                            img.src = `/uploads/${file}`;
+                            gallery.appendChild(img);
+                        });
+                        document.getElementById('prev').disabled = page <= 1;
+                        document.getElementById('next').disabled = page >= totalPages;
+                    })
+                    .catch(error => console.error('Error fetching images:', error));
+            }
+
+            function changePage(offset) {
+                const newPage = currentPage + offset;
+                if (newPage > 0 && newPage <= totalPages) {
+                    currentPage = newPage;
+                    fetchImages(currentPage);
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                fetchImages(currentPage);
+            });
+        </script>
+    </div>
+</body>
+</html>
